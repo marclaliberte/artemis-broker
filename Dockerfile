@@ -25,21 +25,7 @@ RUN update-ca-certificates
 
 # Setup Mongo
 RUN mkdir -p /data/db && \
-  touch /var/log/mongodb.log && \
-  chown -R mongodb:mongodb /data/* && \
-  chmod a+w /var/log/mongodb.log
-#  echo "[Unit]" >> /lib/systemd/system/mongodb.service && \
-#  echo "Description=High-performance, schema-free document-oriented database" >> /lib/systemd/system/mongodb.service && \
-#  echo "After=network.target" >> /lib/systemd/system/mongodb.service && \
-#  echo "" >> /lib/systemd/system/mongodb.service && \
-#  echo "[Service]" >> /lib/systemd/system/mongodb.service && \
-#  echo "User=mongodb" >> /lib/systemd/system/mongodb.service && \
-#  echo "ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf" >> /lib/systemd/system/mongodb.service && \
-#  echo "" >> /lib/systemd/system/mongodb.service && \
-#  echo "[Install]" >> /lib/systemd/system/mongodb.service && \
-#  echo "WantedBy=multi-user.target" /lib/systemd/system/mongodb.service && \
-#  systemctl start mongodb && \
-#  systemctl enable mongodb
+  chown -R mongodb:mongodb /data/*
 
 # Install PIP
 WORKDIR /tmp
@@ -67,9 +53,5 @@ RUN groupadd -r artemis && \
   chown -R artemis:artemis /opt/hpfeeds
 
 COPY startup.sh /startup.sh
-RUN chmod a+x /startup.sh
 CMD bash -C '/startup.sh';'bash'
-#USER artemis
-#ENV HOME /home/artemis
-#ENV USER artemis
 WORKDIR /opt/hpfeeds/broker
