@@ -38,7 +38,8 @@ RUN pip install -q cffi \
       pyopenssl==0.14 \
       pymongo \
       greenlet \
-      gevent
+      gevent \
+      python-daemon
 RUN pip install -e git+https://github.com/rep/evnet.git#egg=evnet-dev
 
 # hpfeeds
