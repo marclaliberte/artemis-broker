@@ -4,13 +4,13 @@ ENV DEBIAN_FRONTEND noninteractive
 USER root
 
 # Add mongo key to sources
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
-  echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+#RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
+#  echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 
 # Main packages
 RUN apt-get update && \
   apt install -y --no-install-recommends \
-    mongodb-org \
+#    mongodb-org \
     python \
     libev-dev \
     build-essential \
@@ -24,8 +24,8 @@ RUN apt-get update && \
 RUN update-ca-certificates
 
 # Setup Mongo
-RUN mkdir -p /data/db && \
-  chown -R mongodb:mongodb /data/*
+#RUN mkdir -p /data/db && \
+#  chown -R mongodb:mongodb /data/*
 
 # Install PIP
 WORKDIR /tmp
@@ -53,6 +53,6 @@ RUN groupadd -r artemis && \
   useradd -r -g artemis -d /home/artemis -s /sbin/nologin -c "Artemis User" artemis && \
   chown -R artemis:artemis /opt/hpfeeds
 
-COPY startup.sh /startup.sh
-CMD bash -C '/startup.sh';'bash'
+#COPY startup.sh /startup.sh
+#CMD bash -C '/startup.sh';'bash'
 WORKDIR /opt/hpfeeds/broker
