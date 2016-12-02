@@ -38,6 +38,7 @@ WORKDIR /opt
 RUN git clone https://github.com/marclaliberte/hpfeeds.git && \
   cd hpfeeds && \
   pip install .
+RUN sed -i "s/127\.0\.0\.1/mongo-database/g" /opt/hpfeeds/broker/config.py
 
 # User Setup
 RUN groupadd -r artemis && \
