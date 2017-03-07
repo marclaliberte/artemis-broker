@@ -3,14 +3,9 @@ MAINTAINER Marc Laliberte
 ENV DEBIAN_FRONTEND noninteractive
 USER root
 
-# Add mongo key to sources
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
-  echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
-
 # Main packages
 RUN apt-get update && \
   apt install -y --no-install-recommends \
-    mongodb-org \
     python \
     libev-dev \
     build-essential \
@@ -19,13 +14,9 @@ RUN apt-get update && \
     python-dev \
     curl \
     ca-certificates \
-    git
+    git 
 
 RUN update-ca-certificates
-
-# Setup Mongo
-RUN mkdir -p /data/db && \
-  chown -R mongodb:mongodb /data/*
 
 # Install PIP
 WORKDIR /tmp
@@ -47,12 +38,11 @@ WORKDIR /opt
 RUN git clone https://github.com/marclaliberte/hpfeeds.git && \
   cd hpfeeds && \
   pip install .
+RUN sed -i "s/127\.0\.0\.1/mongo-database/g" /opt/hpfeeds/broker/config.py
 
 # User Setup
 RUN groupadd -r artemis && \
   useradd -r -g artemis -d /home/artemis -s /sbin/nologin -c "Artemis User" artemis && \
   chown -R artemis:artemis /opt/hpfeeds
 
-COPY startup.sh /startup.sh
-CMD bash -C '/startup.sh';'bash'
 WORKDIR /opt/hpfeeds/broker
