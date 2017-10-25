@@ -29,6 +29,8 @@ Mount broker container, exposing hpfeeds port
 
 Inside mounted container, add clients and servers via add_user.py and start the broker
  ```
- python adduser.py <ident> <secret> <publish> <subscribe>
+ python add_server.py <ident> <secret>
+ python add_client.py <ident> <secret>
+ python add_storage.py <ident> <secret>
  python broker.py start
  ```
